@@ -1,0 +1,6 @@
+framework module Pods_DocuSign_REST {
+  umbrella header "Pods-DocuSign-REST-umbrella.h"
+
+  export *
+  module * { export * }
+}
