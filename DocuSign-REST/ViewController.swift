@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBOutlet weak var label: UILabel?
+    
     @IBAction func buttonClicked(sender: AnyObject) {
         getAccountURL()
     }
@@ -59,7 +61,6 @@ class ViewController: UIViewController {
                     debugPrint(response.result.value)
                     */
  
-
                     let loginAccounts = response.result.value as! NSDictionary
                     /*
                     let loginAccounts_login = loginAccounts["loginAccounts"]
@@ -71,9 +72,11 @@ class ViewController: UIViewController {
                     */
                     let loginAccounts_login = (loginAccounts["loginAccounts"]! as! NSArray).mutableCopy() as! NSMutableArray
                     let loginAccounts_login_dict = loginAccounts_login[0] as! NSDictionary
-                    print(loginAccounts_login_dict["userId"])
+                    let userID = loginAccounts_login_dict["userId"]
                     
-                    print("LOL")
+                    self.label!.text = userID as! String
+                    
+                    
                     /*
                     var jsonParsed: [String:String]?
                     do {
