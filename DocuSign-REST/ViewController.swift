@@ -26,50 +26,67 @@ class ViewController: UIViewController {
     }
     
     func getAccountURL() {
-        //let parameters: Parameters = []
+
         let userVerification = ["Username":"maxwyb@hotmail.com", "Password":"NNbnds.2009", "IntegratorKey":"7da1c5dc-5fae-4df9-80b4-4dbeffd8db34"]
-        //var error: NSError?
-        /*
-        if let data = JSONSerialization.dataWithJSONObject(userVerification, options: JSONSerialization.WritingOptions.PrettyPrinted) {
-            if let json = NSString(data: data, encoding: NSUTF8StringEncoding) {
-                print(json)
-                
-                let headers: HTTPHeaders = [ "X-DocuSign-Authentication": json]
-                Alamofire.request("https://demo.docusign.net/restapi/v2/login_information", headers: headers).responseJSON { response in
-                    debugPrint(response)
-                }
-            }
-        }
-        */
-        /*
-        var data: Data
+
+        var data: Data? // NSDictionary to NSData Serialization
         do {
-            data = try JSONSerialization.data(withJSONObject: userVerification, options: JSONSerialization.WritingOptions.prettyPrinted)
-        } catch _ {
-            debugPrint("Error...");
-        }
-        if let data = data as Data? {
-            let json = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-            if let json = json {
-                print(json)
-            }
-        }
-        */
-        var data: Data?
-        do {
-            data = try JSONSerialization.data(withJSONObject: userVerification, options: JSONSerialization.WritingOptions.prettyPrinted)
+            data = try JSONSerialization.data(withJSONObject: userVerification)
         } catch {
             data = nil
         }
+        
         if let data = data {
-            let json = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+            let json = NSString(data: data, encoding: String.Encoding.utf8.rawValue) // NSData to NSString
             if let json = json {
-                debugPrint(json)
+                //debugPrint(json)
+                
                 
                 let headers: HTTPHeaders = [ "X-DocuSign-Authentication": json as String]
                 Alamofire.request("https://demo.docusign.net/restapi/v2/login_information", headers: headers).responseJSON { response in
-                    debugPrint(response)
+                    //debugPrint(response.result)
+                    if(response.result != nil){
+                        //print(response.data)
+                        let x = response.result.value as! NSDictionary
+                        print(x["loginAccounts"])
+                        
+                        //print(x["accountId"])
+                    }
+                    var jsonParsed: [String:String]?
+                    /*
+                    do {
+                        try jsonParsed = JSONSerialization.jsonObject(with: response.result, options: []) as? [String:String]
+                    } catch let error as NSError {
+                        print(error)
+                    }
+                    */
+                    
+                    /*
+                    do {
+                        jsonResult = try JSONSerialization.jsonObject(with: response as DataResponse, options: nil) as? [String:AnyObject]
+                    } catch {
+                        jsonResult = nil;
+                    }
+                     */
+                
+//                    print("--------")
+//                    print(response.result.value)
+//                    print("--------")
+                    /*
+                    switch response.result {
+                        case .Success(let value):
+                            let val = response.data
+                            completionHandler(val, nil)
+                        case .Failure(let error):
+                            completionHandler(nil, error)
+                     }
+                    */
+//                    print("--------")
+//                    let val = response.data
+//                    print(val)
+//                    print("--------")
                 }
+ 
             }
         }
 
