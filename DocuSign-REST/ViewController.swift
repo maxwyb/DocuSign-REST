@@ -60,13 +60,20 @@ class ViewController: UIViewController {
                     */
  
 
-                    if(response.result != nil){
-                        let loginAccounts = response.result.value as! [String:AnyObject]
-                        print(loginAccounts["loginAccounts"])
-                        
-                        //print(x["accountId"])
-                    }
+                    let loginAccounts = response.result.value as! NSDictionary
+                    /*
+                    let loginAccounts_login = loginAccounts["loginAccounts"]
+                    print(loginAccounts_login)
+                    */
+                    /*
+                    let dicExample = ["Apple": 1, "Banana": 12]
+                    print(dicExample);
+                    */
+                    let loginAccounts_login = (loginAccounts["loginAccounts"]! as! NSArray).mutableCopy() as! NSMutableArray
+                    let loginAccounts_login_dict = loginAccounts_login[0] as! NSDictionary
+                    print(loginAccounts_login_dict["userId"])
                     
+                    print("LOL")
                     /*
                     var jsonParsed: [String:String]?
                     do {
@@ -76,10 +83,8 @@ class ViewController: UIViewController {
                     }
                     */
                 }
- 
             }
         }
-
     }
 
 }
