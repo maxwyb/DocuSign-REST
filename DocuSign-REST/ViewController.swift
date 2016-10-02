@@ -44,47 +44,37 @@ class ViewController: UIViewController {
                 
                 let headers: HTTPHeaders = [ "X-DocuSign-Authentication": json as String]
                 Alamofire.request("https://demo.docusign.net/restapi/v2/login_information", headers: headers).responseJSON { response in
-                    //debugPrint(response.result)
+                    
+                    /*
+                    debugPrint("----------response.data----------")
+                    debugPrint(response.data)
+                    debugPrint("---------------------------------")
+                    debugPrint("----------response.description----------");
+                    debugPrint(response.description)
+                    debugPrint("---------------------------------")
+                    debugPrint("----------response.result----------");
+                    debugPrint(response.result)
+                    debugPrint("---------------------------------")
+                    debugPrint("----------response.result.value----------");
+                    debugPrint(response.result.value)
+                    */
+ 
+
                     if(response.result != nil){
-                        //print(response.data)
-                        let x = response.result.value as! NSDictionary
-                        print(x["loginAccounts"])
+                        let loginAccounts = response.result.value as! [String:AnyObject]
+                        print(loginAccounts["loginAccounts"])
                         
                         //print(x["accountId"])
                     }
-                    var jsonParsed: [String:String]?
+                    
                     /*
+                    var jsonParsed: [String:String]?
                     do {
                         try jsonParsed = JSONSerialization.jsonObject(with: response.result, options: []) as? [String:String]
                     } catch let error as NSError {
                         print(error)
                     }
                     */
-                    
-                    /*
-                    do {
-                        jsonResult = try JSONSerialization.jsonObject(with: response as DataResponse, options: nil) as? [String:AnyObject]
-                    } catch {
-                        jsonResult = nil;
-                    }
-                     */
-                
-//                    print("--------")
-//                    print(response.result.value)
-//                    print("--------")
-                    /*
-                    switch response.result {
-                        case .Success(let value):
-                            let val = response.data
-                            completionHandler(val, nil)
-                        case .Failure(let error):
-                            completionHandler(nil, error)
-                     }
-                    */
-//                    print("--------")
-//                    let val = response.data
-//                    print(val)
-//                    print("--------")
                 }
  
             }
